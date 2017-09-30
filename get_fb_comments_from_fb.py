@@ -1,15 +1,24 @@
+from __future__ import print_function
 import json
 import datetime
 import csv
 import time
+import argparse
 try:
     from urllib.request import urlopen, Request
 except ImportError:
     from urllib2 import urlopen, Request
 
-app_id = "<FILL IN>"
-app_secret = "<FILL IN>"  # DO NOT SHARE WITH ANYONE!
-file_id = "cnn"
+parser = argparse.ArgumentParser(description='Downloads FB posts from a public page.')
+parser.add_argument('--page_id', type=str, help='The ID of the page')
+parser.add_argument('--app_id', type=str, help='Your App ID')
+parser.add_argument('--app_secret', type=str, help='Your App Secret')
+
+args = parser.parse_args()
+
+app_id = args.app_id
+app_secret = args.app_secret  # DO NOT SHARE WITH ANYONE!
+page_id = args.page_id
 
 access_token = app_id + "|" + app_secret
 

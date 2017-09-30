@@ -1,19 +1,29 @@
+from __future__ import print_function
 import json
 import datetime
 import csv
 import time
+import argparse
 try:
     from urllib.request import urlopen, Request
 except ImportError:
     from urllib2 import urlopen, Request
 
-app_id = "<FILL IN>"
-app_secret = "<FILL IN>"  # DO NOT SHARE WITH ANYONE!
-page_id = "cnn"
+parser = argparse.ArgumentParser(description='Downloads FB posts from a public page.')
+parser.add_argument('--page_id', type=str, help='The ID of the page')
+parser.add_argument('--app_id', type=str, help='Your App ID')
+parser.add_argument('--app_secret', type=str, help='Your App Secret')
+parser.add_argument('--since', type=str, default="", help='Get post starting from YYYY-MM-DD')
+parser.add_argument('--until', type=str, default="", help='Get post until YYYY-MM-DD')
+args = parser.parse_args()
+
+app_id = args.app_id
+app_secret = args.app_secret  # DO NOT SHARE WITH ANYONE!
+page_id = args.page_id
 
 # input date formatted as YYYY-MM-DD
-since_date = ""
-until_date = ""
+since_date = args.since
+until_date = args.until
 
 access_token = app_id + "|" + app_secret
 
@@ -181,4 +191,9 @@ def scrapeFacebookPageFeedStatus(page_id, access_token, since_date, until_date):
 
 
 if __name__ == '__main__':
+    print(app_id)
+    print(app_secret)
+    print(page_id)
+    print(since_date)
+    print(until_date)
     scrapeFacebookPageFeedStatus(page_id, access_token, since_date, until_date)
